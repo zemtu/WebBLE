@@ -26,7 +26,8 @@ import WebKit
 open class WBDevice: NSObject, Jsonifiable, CBPeripheralDelegate {
     // MARK: - Embedded types
     enum DeviceRequests: String {
-        case connectGATT, disconnectGATT,  getPrimaryService,
+        case connectGATT, disconnectGATT,
+        getPrimaryService, getPrimaryServices,
         getCharacteristic, readCharacteristicValue, startNotifications,
         stopNotifications,
         writeCharacteristicValue
@@ -60,7 +61,6 @@ open class WBDevice: NSObject, Jsonifiable, CBPeripheralDelegate {
             self.serviceUUID = CBUUID(nsuuid: pservUUID)
             super.init(transaction: transaction)
         }
-
         func resolveUnknownService() {
             self.transaction.resolveAsFailure(withMessage: "Service \(self.serviceUUID.uuidString) not known on device")
         }
@@ -138,16 +138,20 @@ open class WBDevice: NSObject, Jsonifiable, CBPeripheralDelegate {
     var connectTransactions = [WBTransaction]()
     var disconnectTM = WBTransactionManager<UUID>()
     var getPrimaryServiceTM = WBTransactionManager<CBUUID>()
+    // only one of these, integer 0
+    var getPrimaryServicesGlobalTM = WBTransactionManager<Int>()
     var getCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
     var readCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
     /*! @abstract Outstanding transactions for characteristic write requests */
     var writeCharacteristicTM = WBTransactionManager<CharacteristicTransactionKey>()
+    var transactionManagers: [WBTransactionManagerProtocol]
 
     // MARK: - Constructor and equality
     init(peripheral: CBPeripheral, advertisementData: [String: Any] = [:], RSSI: NSNumber = 0, manager: WBManager) {
         self.peripheral = peripheral
         self.adData = BluetoothAdvertisingData(advertisementData:advertisementData,RSSI: RSSI)
         self.manager = manager
+        self.transactionManagers = [disconnectTM, getPrimaryServiceTM, getPrimaryServicesGlobalTM, getCharacteristicTM, readCharacteristicTM, writeCharacteristicTM]
         super.init()
         self.peripheral.delegate = self
     }
@@ -164,11 +168,8 @@ open class WBDevice: NSObject, Jsonifiable, CBPeripheralDelegate {
             }
             ta.removeAll()
         }
-        self.disconnectTM.abandonAll()
+        self.transactionManagers.forEach{$0.abandonAll()}
         self.sendDisconnectEvent()
-        self.getPrimaryServiceTM.abandonAll()
-        self.getCharacteristicTM.abandonAll()
-        self.readCharacteristicTM.abandonAll()
     }
     func didConnect() {
         self.connectTransactions.forEach{$0.resolveAsSuccess()}
@@ -236,15 +237,27 @@ open class WBDevice: NSObject, Jsonifiable, CBPeripheralDelegate {
             self.handleDisconnect(tview)
 
         case .getPrimaryService:
-
             guard
                 let tview = ServiceTransactionView(transaction: transaction)
             else {
                 transaction.resolveAsFailure(withMessage: "Invalid getPrimaryService request")
                 return
             }
-
             self.handleGetPrimaryService(tview)
+
+        case .getPrimaryServices:
+            let stview = ServiceTransactionView(transaction: transaction)
+            if let stview_ = stview {
+                // form getPrimaryServices(service)
+                return self.handleGetPrimaryServicesForService(stview_)
+            }
+            let gtview = DeviceTransactionView(transaction: transaction)
+            // either we have the service argument or we don't
+            guard stview != nil || gtview != nil
+            else {
+                transaction.resolveAsFailure(withMessage: "Invalid getPrimaryServices request")
+                return
+            }
 
         case .getCharacteristic:
 
@@ -537,6 +550,13 @@ open class WBDevice: NSObject, Jsonifiable, CBPeripheralDelegate {
         self.getPrimaryServiceTM.addTransaction(transaction, atPath: tview.serviceUUID)
         NSLog("Starting discovering for service \(tview.serviceUUID) on peripheral \(self.peripheral.name ?? "<unknown name>")")
         self.peripheral.discoverServices(nil)
+    }
+    private func handleGetPrimaryServicesForService(_ tview: ServiceTransactionView) {
+        let transaction = tview.transaction
+
+    }
+    private func handleGetPrimaryServices(_ tview: DeviceTransactionView) {
+
     }
 
     private func evaluateJavaScript(_ script: String) {
