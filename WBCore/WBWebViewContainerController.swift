@@ -124,7 +124,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         self.loadingProgressContainer.isHidden = false
-        self._configureNewManager(true)
+        self._configureNewManager(autoselectDevice: true)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
