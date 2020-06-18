@@ -34,6 +34,8 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
     }
 
     // MARK: - Properties
+    var autoselectDevice = false;
+    var autoselectTime: Timer?
     let debug = true
     let centralManager = CBCentralManager(delegate: nil, queue: nil)
     var devicePicker: WBPicker
@@ -106,7 +108,13 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
             RSSI: RSSI, manager: self)
         if !self.pickerDevices.contains(where: {$0 == device}) {
             self.pickerDevices.append(device)
-            self.updatePickerData()
+            
+            if (autoselectDevice) {
+                self.selectDeviceAt(0)
+                self.autoselectTime?.invalidate()
+            } else {
+                self.updatePickerData()
+            }
         }
     }
     
@@ -181,6 +189,19 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
             }
             device.triage(view)
         case .requestDevice:
+            if (centralManager.state != CBManagerState.poweredOn) {
+                transaction.resolveAsFailure(withMessage: "Bluetooth not activated.")
+                stopScanForPeripherals()
+                requestDeviceTransaction = nil
+                clearState()
+                
+                let alert = UIAlertController(title: NSLocalizedString("turn_on_bluetooth_title", comment: "Turn on bluetooth alert title"), message: NSLocalizedString("turn_on_bluetooth_body", comment: "Turn on bluetooth alert body"), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                // UIApplication.topViewController()?.present(alert, animated: true)
+                
+                return
+            }
+            
             guard transaction.key.typeComponents.count == 1
             else {
                 transaction.resolveAsFailure(withMessage: "Invalid request type \(transaction.key)")
@@ -242,10 +263,21 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
         self.devicesByExternalUUID[device.deviceId] = device;
         self.devicesByInternalUUID[device.internalUUID] = device;
     }
+    
+    func startOptionalAutoconnectionTimer() {
+        if (self.autoselectDevice) {
+            autoselectTime = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: false) { timer in
+                // Cancel search.
+                self.cancelDeviceSearch()
+                self.autoselectTime?.invalidate()
+            }
+        }
+    }
 
     func scanForAllPeripherals() {
         self._clearPickerView()
         self.filters = nil
+        self.startOptionalAutoconnectionTimer();
         centralManager.scanForPeripherals(withServices: nil, options: nil)
     }
 
@@ -265,8 +297,9 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
             NSLog("Scanning for peripherals... (services: \(servicesCBUUID))")
         }
         
-        self._clearPickerView();
+        self._clearPickerView()
         self.filters = filters
+        self.startOptionalAutoconnectionTimer()
         centralManager.scanForPeripherals(withServices: servicesCBUUID, options: nil)
     }
     private func stopScanForPeripherals() {
