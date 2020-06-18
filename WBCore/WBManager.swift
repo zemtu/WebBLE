@@ -197,7 +197,7 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
                 
                 let alert = UIAlertController(title: NSLocalizedString("turn_on_bluetooth_title", comment: "Turn on bluetooth alert title"), message: NSLocalizedString("turn_on_bluetooth_body", comment: "Turn on bluetooth alert body"), preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                // UIApplication.topViewController()?.present(alert, animated: true)
+                topMostController()?.present(alert, animated: true)
                 
                 return
             }
@@ -239,8 +239,25 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
                 self.stopScanForPeripherals()
                 self.requestDeviceTransaction = nil
             }
-            self.devicePicker.showPicker()
+            
+            if (!self.autoselectDevice) {
+                self.devicePicker.showPicker()
+            }
         }
+    }
+    
+    func topMostController() -> UIViewController? {
+        guard let window = UIApplication.shared.keyWindow, let rootViewController = window.rootViewController else {
+            return nil
+        }
+
+        var topController = rootViewController
+
+        while let newTopController = topController.presentedViewController {
+            topController = newTopController
+        }
+
+        return topController
     }
 
     func clearState() {
