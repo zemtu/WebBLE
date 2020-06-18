@@ -124,7 +124,7 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         self.loadingProgressContainer.isHidden = false
-        self._configureNewManager(autoselectDevice: true)
+        self._configureNewManager()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -216,10 +216,10 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     }
     
     // MARK: - Private
-    private func _configureNewManager(autoselectDevice: Bool) {
+    private func _configureNewManager() {
         self.wbManager?.clearState()
         self.wbManager = WBManager(devicePicker: self)
-        self.wbManager?.autoselectDevice = autoselectDevice
+        self.wbManager?.autoselectDevice = webView.autoselectDevice
         self.webView.wbManager = self.wbManager
     }
 }

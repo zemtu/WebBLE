@@ -25,6 +25,8 @@ import WebKit
 class WBWebView: WKWebView, WKNavigationDelegate {
     let webBluetoothHandlerName = "bluetooth"
     private var _wbManager: WBManager?
+    var autoselectDevice: Bool = false
+    
     var wbManager: WBManager? {
         get {
             return self._wbManager
@@ -38,6 +40,20 @@ class WBWebView: WKWebView, WKNavigationDelegate {
                 self.configuration.userContentController.add(newMan, name: self.webBluetoothHandlerName)
             }
         }
+    }
+    
+    public func loadURLFromPLIST() {
+        if let path = Bundle.main.path(forResource: "Config", ofType: "plist") {
+           let nsDictionary = NSDictionary(contentsOfFile: path)
+            
+           // Added cache policy prevents content to be cached.
+            self.load(URLRequest(url: URL(string: nsDictionary?.value(forKey: "url") as! String)!, cachePolicy: URLRequest.CachePolicy.reloadIgnoringCacheData))
+        }
+    }
+    
+    public func setAutoselectDevice(autoselectDevice: Bool) {
+        self.autoselectDevice = autoselectDevice
+        self._wbManager?.autoselectDevice = self.autoselectDevice
     }
 
     private var _navDelegates: [WKNavigationDelegate] = []
