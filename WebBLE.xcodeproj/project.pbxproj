@@ -48,6 +48,7 @@
 		BB303DF31C42070C00FCAF24 /* WBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB303DF21C42070C00FCAF24 /* WBManager.swift */; };
 		BB4DBE651C97F577000D2C35 /* WBTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4DBE641C97F577000D2C35 /* WBTransaction.swift */; };
 		BB4DE1F41C8D0A44003151BF /* WBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4DE1F31C8D0A44003151BF /* WBDevice.swift */; };
+		DF173BC5249B633F00640716 /* GeolocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173BC4249B633F00640716 /* GeolocationHelper.swift */; };
 		E44C185C1A36203E00734F8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44C185B1A36203E00734F8B /* AppDelegate.swift */; };
 		E44C185E1A36203E00734F8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44C185D1A36203E00734F8B /* ViewController.swift */; };
 		E44C18611A36203E00734F8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E44C185F1A36203E00734F8B /* Main.storyboard */; };
@@ -112,6 +113,7 @@
 		BB303DF21C42070C00FCAF24 /* WBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBManager.swift; sourceTree = "<group>"; };
 		BB4DBE641C97F577000D2C35 /* WBTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBTransaction.swift; sourceTree = "<group>"; };
 		BB4DE1F31C8D0A44003151BF /* WBDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBDevice.swift; sourceTree = "<group>"; };
+		DF173BC4249B633F00640716 /* GeolocationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeolocationHelper.swift; sourceTree = "<group>"; };
 		E44C18561A36203E00734F8B /* WebBLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebBLE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E44C185A1A36203E00734F8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E44C185B1A36203E00734F8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		5A233341230353E1008D9F03 /* WBCore */ = {
 			isa = PBXGroup;
 			children = (
+				DF173BC4249B633F00640716 /* GeolocationHelper.swift */,
 				5A10929C2168D5B6002CC973 /* Console */,
 				5AFC780322ECDD410071E792 /* Polyfill */,
 				5ADE336D23663353007E6AD7 /* Images.xcassets */,
@@ -396,6 +399,7 @@
 				5AC7ECAB233D0F9700CE7A2A /* Segues.swift in Sources */,
 				5AC7ECAD233D177700CE7A2A /* WBPopUpPickerView.swift in Sources */,
 				5AC47CA81E2CCF2F00BCAE82 /* Animations.swift in Sources */,
+				DF173BC5249B633F00640716 /* GeolocationHelper.swift in Sources */,
 				5AC8067D21655B5E00AA5176 /* DividerView.swift in Sources */,
 				5A7579EA2151588B003F0CEA /* ConsoleViewController.swift in Sources */,
 				5A5D6404216C9F9300BCD722 /* WBLog.swift in Sources */,

@@ -21,10 +21,13 @@
 import Foundation
 import UIKit
 import WebKit
+import SafariServices
 
 class WBWebView: WKWebView, WKNavigationDelegate {
     let webBluetoothHandlerName = "bluetooth"
     private var _wbManager: WBManager?
+    private var geolocationHelper = GeolocationHelper()
+    
     var wbManager: WBManager? {
         get {
             return self._wbManager
@@ -39,12 +42,25 @@ class WBWebView: WKWebView, WKNavigationDelegate {
             }
         }
     }
+    
+    public func loadURLFromPLIST() {
+        if let path = Bundle.main.path(forResource: "Config", ofType: "plist") {
+           let nsDictionary = NSDictionary(contentsOfFile: path)
+            
+           // Added cache policy prevents content to be cached.
+            self.load(URLRequest(url: URL(string: nsDictionary?.value(forKey: "url") as! String)!, cachePolicy: URLRequest.CachePolicy.reloadIgnoringCacheData))
+        }
+    }
 
     private var _navDelegates: [WKNavigationDelegate] = []
 
     // MARK: - Initializers
     required public override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
+        
+        // Set webview configuration
+        geolocationHelper.setUserContentController(webViewConfiguration: configuration)
+        geolocationHelper.setWebView(webView: self)
     }
 
     convenience public required init?(coder: NSCoder) {
@@ -98,7 +114,12 @@ class WBWebView: WKWebView, WKNavigationDelegate {
                 forMainFrameOnly: false)
             userController.addUserScript(userScript)
         }
-
+        
+        // Let the app know, that we are a native wrapper.
+        let nativeScriptSource = "window.native = 'iOS';";
+        let script = WKUserScript(source: nativeScriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+        userController.addUserScript(script)
+        
         // WKWebView static config
         self.translatesAutoresizingMaskIntoConstraints = false
         self.allowsBackForwardNavigationGestures = true
@@ -120,14 +141,48 @@ class WBWebView: WKWebView, WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self._enableBluetoothInView()
+        self._enableLocationTracking()
         self._navDelegates.forEach{$0.webView?(webView, didFinish: navigation)}
     }
+    
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self._navDelegates.forEach{$0.webView?(webView, didFail: navigation, withError: error)}
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         self._navDelegates.forEach{$0.webView?(webView, didFailProvisionalNavigation: navigation, withError: error)}
+    }
+    
+    // Decides the policy for a new navigation action
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if (navigationAction.request.url?.scheme == "tel" || navigationAction.request.url?.scheme == "mailto") {
+            UIApplication.shared.open(navigationAction.request.url!)
+            decisionHandler(.cancel)
+        } else if navigationAction.targetFrame == nil {
+            if let url = navigationAction.request.url {
+                let safariVC = SFSafariViewController(url: url)
+                guard let viewController = getCurrentViewController() else {
+                    return;
+                }
+                safariVC.modalPresentationStyle = .formSheet
+                viewController.present(safariVC, animated: true)
+            }
+            decisionHandler(.cancel)
+        } else {
+            decisionHandler(.allow)
+        }
+    }
+    
+    // Returns the main UIViewController
+    func getCurrentViewController() -> UIViewController? {
+        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
+            var currentController: UIViewController! = rootController
+            while( currentController.presentedViewController != nil ) {
+                currentController = currentController.presentedViewController
+            }
+            return currentController
+        }
+        return nil
     }
 
     // MARK: - Internal
@@ -140,6 +195,10 @@ class WBWebView: WKWebView, WKNavigationDelegate {
                 }
             }
         )
+    }
+    
+    open func _enableLocationTracking() {
+        self.evaluateJavaScript(self.geolocationHelper.getJavaScripToEvaluate());
     }
 }
 
