@@ -146,6 +146,7 @@ class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegat
         self.locationTextField.delegate = self
         self.webView.addNavigationDelegate(self)
         self.webView.scrollView.delegate = self
+        self.webView.setAutoselectDevice(autoselectDevice: true)
         self.webView.scrollView.clipsToBounds = false
         self.webViewContainerController.addObserver(self, forKeyPath: "pickerIsShowing", options: [], context: nil)
 

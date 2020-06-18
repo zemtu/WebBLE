@@ -27,6 +27,7 @@ class WBWebView: WKWebView, WKNavigationDelegate {
     let webBluetoothHandlerName = "bluetooth"
     private var _wbManager: WBManager?
     private var geolocationHelper = GeolocationHelper()
+    var autoselectDevice: Bool = false
     
     var wbManager: WBManager? {
         get {
@@ -50,6 +51,11 @@ class WBWebView: WKWebView, WKNavigationDelegate {
            // Added cache policy prevents content to be cached.
             self.load(URLRequest(url: URL(string: nsDictionary?.value(forKey: "url") as! String)!, cachePolicy: URLRequest.CachePolicy.reloadIgnoringCacheData))
         }
+    }
+    
+    public func setAutoselectDevice(autoselectDevice: Bool) {
+        self.autoselectDevice = autoselectDevice
+        self._wbManager?.autoselectDevice = self.autoselectDevice
     }
 
     private var _navDelegates: [WKNavigationDelegate] = []
@@ -161,7 +167,7 @@ class WBWebView: WKWebView, WKNavigationDelegate {
         } else if navigationAction.targetFrame == nil {
             if let url = navigationAction.request.url {
                 let safariVC = SFSafariViewController(url: url)
-                guard let viewController = getCurrentViewController() else {
+                guard let viewController = WBWebView.getCurrentViewController() else {
                     return;
                 }
                 safariVC.modalPresentationStyle = .formSheet
@@ -174,7 +180,7 @@ class WBWebView: WKWebView, WKNavigationDelegate {
     }
     
     // Returns the main UIViewController
-    func getCurrentViewController() -> UIViewController? {
+    static func getCurrentViewController() -> UIViewController? {
         if let rootController = UIApplication.shared.keyWindow?.rootViewController {
             var currentController: UIViewController! = rootController
             while( currentController.presentedViewController != nil ) {
