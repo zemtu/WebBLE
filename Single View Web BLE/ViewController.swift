@@ -22,6 +22,7 @@ class SVViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.WBWebViewContainerController.preventConsole = true
         self.webView.load(URLRequest(url: URL(
             string: "https://www.greenparksoftware.co.uk"
         )!))

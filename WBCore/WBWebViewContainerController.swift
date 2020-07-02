@@ -49,6 +49,8 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     @IBOutlet var loadingProgressContainer: UIView!
     @IBOutlet var loadingProgressView: UIView!
     
+    public var preventConsole = false
+    
     // At some point it might be nice to try and handle back and
     // forward in the browser better, i.e. by managing multiple managers
     // for recent pages so that you can go back and forward to them
@@ -85,13 +87,16 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
 
     // MARK: - IBActions
     @IBAction public func toggleConsole() {
+        if (preventConsole) {
+            return
+        }
+        
         if let ccc = self.consoleContainerController {
             ccc.removeFromParent()
             ccc.view.removeFromSuperview()
             UserDefaults.standard.setValue(false, forKey: WBWebViewContainerController.prefKeys.consoleOpen.rawValue)
         } else {
             self.performSegue(withIdentifier: "WBContainerControllerToConsoleSegueID", sender: self)
-            
         }
     }
     

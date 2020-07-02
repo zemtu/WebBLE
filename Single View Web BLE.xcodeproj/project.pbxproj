@@ -107,6 +107,7 @@
 		5ADE336923663166007E6AD7 /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE336723663166007E6AD7 /* ErrorViewController.swift */; };
 		5ADE336A23663166007E6AD7 /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE336723663166007E6AD7 /* ErrorViewController.swift */; };
 		5ADE336C236631F0007E6AD7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE336B236631F0007E6AD7 /* Images.xcassets */; };
+		DF2BF97F24ADF0F600E5C898 /* GeolocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2BF97E24ADF0F600E5C898 /* GeolocationHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +173,7 @@
 		5ADE336323663143007E6AD7 /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		5ADE336723663166007E6AD7 /* ErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		5ADE336B236631F0007E6AD7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = WBCore/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		DF2BF97E24ADF0F600E5C898 /* GeolocationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeolocationHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +256,7 @@
 		5AD6DA902323CA080005F733 /* WBCore */ = {
 			isa = PBXGroup;
 			children = (
+				DF2BF97E24ADF0F600E5C898 /* GeolocationHelper.swift */,
 				5ADE336323663143007E6AD7 /* Animations.swift */,
 				5ADE336723663166007E6AD7 /* ErrorViewController.swift */,
 				5A181FF323284F1A0092A850 /* Jsonifiable.swift */,
@@ -489,6 +492,7 @@
 				5AD6DAC72323CEF70005F733 /* WBLog.swift in Sources */,
 				5AD6DA632323C1CB0005F733 /* AppDelegate.swift in Sources */,
 				5ADE336423663143007E6AD7 /* Animations.swift in Sources */,
+				DF2BF97F24ADF0F600E5C898 /* GeolocationHelper.swift in Sources */,
 				5ADE335A23663104007E6AD7 /* ConsoleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
