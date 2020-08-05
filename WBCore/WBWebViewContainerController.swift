@@ -56,6 +56,8 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
     // the devices have been disconnected
     var wbManager: WBManager?
     
+    public var preventConsole = false
+    
     var webViewController: WBWebViewController {
         get {
             return self.children.first(where: {$0 as? WBWebViewController != nil}) as! WBWebViewController
@@ -85,6 +87,10 @@ class WBWebViewContainerController: UIViewController, WKNavigationDelegate, WKUI
 
     // MARK: - IBActions
     @IBAction public func toggleConsole() {
+        if (preventConsole) {
+            return
+        }
+        
         if let ccc = self.consoleContainerController {
             ccc.removeFromParent()
             ccc.view.removeFromSuperview()
