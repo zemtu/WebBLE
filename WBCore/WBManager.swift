@@ -194,6 +194,7 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
                 stopScanForPeripherals()
                 requestDeviceTransaction = nil
                 clearState()
+                
                 return
             }
             
