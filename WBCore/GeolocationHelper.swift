@@ -1,9 +1,5 @@
 //
 //  GeolocationHelper.swift
-//  ZemtuApp
-//
-//  Created by Lukas Böhler on 25.03.20.
-//  Copyright © 2020 Zemtu OG. All rights reserved.
 //
 
 import WebKit
