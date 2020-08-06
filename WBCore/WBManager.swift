@@ -34,7 +34,7 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
     }
 
     // MARK: - Properties
-    var autoselectDevice = false;
+    var autoConnectDevice = false;
     var autoselectTime: Timer?
     let debug = true
     let centralManager = CBCentralManager(delegate: nil, queue: nil)
@@ -109,7 +109,7 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
         if !self.pickerDevices.contains(where: {$0 == device}) {
             self.pickerDevices.append(device)
             
-            if (autoselectDevice) {
+            if (autoConnectDevice) {
                 self.selectDeviceAt(0)
                 self.autoselectTime?.invalidate()
             } else {
@@ -265,7 +265,7 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
     }
     
     func startOptionalAutoconnectionTimer() {
-        if (self.autoselectDevice) {
+        if (self.autoConnectDevice) {
             autoselectTime = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: false) { timer in
                 // Cancel search.
                 self.cancelDeviceSearch()
