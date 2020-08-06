@@ -194,11 +194,6 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
                 stopScanForPeripherals()
                 requestDeviceTransaction = nil
                 clearState()
-                
-                let alert = UIAlertController(title: NSLocalizedString("turn_on_bluetooth_title", comment: "Turn on bluetooth alert title"), message: NSLocalizedString("turn_on_bluetooth_body", comment: "Turn on bluetooth alert body"), preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                // UIApplication.topViewController()?.present(alert, animated: true)
-                
                 return
             }
             
