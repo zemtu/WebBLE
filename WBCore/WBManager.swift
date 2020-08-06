@@ -188,16 +188,7 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
                     break
             }
             device.triage(view)
-        case .requestDevice:
-            if (centralManager.state != CBManagerState.poweredOn) {
-                transaction.resolveAsFailure(withMessage: "Bluetooth not activated.")
-                stopScanForPeripherals()
-                requestDeviceTransaction = nil
-                clearState()
-                
-                return
-            }
-            
+        case .requestDevice:            
             guard transaction.key.typeComponents.count == 1
             else {
                 transaction.resolveAsFailure(withMessage: "Invalid request type \(transaction.key)")
