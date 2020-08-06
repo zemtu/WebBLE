@@ -190,6 +190,7 @@ open class WBManager: NSObject, CBCentralManagerDelegate, WKScriptMessageHandler
                 let alert = UIAlertController(title: NSLocalizedString("turn_on_bluetooth_title", comment: "Turn on bluetooth."), message: NSLocalizedString("turn_on_bluetooth_body", comment: "Please turn on bluetooth."), preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 
+                // Find top most ViewController.
                 let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
                 if var topController = keyWindow?.rootViewController {
                     while let presentedViewController = topController.presentedViewController {
