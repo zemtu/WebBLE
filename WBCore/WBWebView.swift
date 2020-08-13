@@ -89,6 +89,7 @@ class WBWebView: WKWebView, WKNavigationDelegate {
         // Load js
         for jsfilename in [
             "stringview",
+            "GeolocationHelper",
             "WBUtils",
             "WBEventTarget",
             "WBBluetoothUUID",
@@ -141,7 +142,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self._enableBluetoothInView()
-        self._enableLocationTracking()
         self._navDelegates.forEach{$0.webView?(webView, didFinish: navigation)}
     }
     
@@ -195,10 +195,6 @@ class WBWebView: WKWebView, WKNavigationDelegate {
                 }
             }
         )
-    }
-    
-    open func _enableLocationTracking() {
-        self.evaluateJavaScript(self.geolocationHelper.getJavaScripToEvaluate());
     }
 }
 

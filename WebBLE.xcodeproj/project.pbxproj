@@ -48,6 +48,7 @@
 		BB303DF31C42070C00FCAF24 /* WBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB303DF21C42070C00FCAF24 /* WBManager.swift */; };
 		BB4DBE651C97F577000D2C35 /* WBTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4DBE641C97F577000D2C35 /* WBTransaction.swift */; };
 		BB4DE1F41C8D0A44003151BF /* WBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4DE1F31C8D0A44003151BF /* WBDevice.swift */; };
+		DF17308724E53B6700612AB1 /* GeolocationHelper.js in Sources */ = {isa = PBXBuildFile; fileRef = DF17308624E53B6700612AB1 /* GeolocationHelper.js */; };
 		DF173BC5249B633F00640716 /* GeolocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173BC4249B633F00640716 /* GeolocationHelper.swift */; };
 		E44C185C1A36203E00734F8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44C185B1A36203E00734F8B /* AppDelegate.swift */; };
 		E44C185E1A36203E00734F8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44C185D1A36203E00734F8B /* ViewController.swift */; };
@@ -113,6 +114,7 @@
 		BB303DF21C42070C00FCAF24 /* WBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBManager.swift; sourceTree = "<group>"; };
 		BB4DBE641C97F577000D2C35 /* WBTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBTransaction.swift; sourceTree = "<group>"; };
 		BB4DE1F31C8D0A44003151BF /* WBDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBDevice.swift; sourceTree = "<group>"; };
+		DF17308624E53B6700612AB1 /* GeolocationHelper.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = GeolocationHelper.js; sourceTree = "<group>"; };
 		DF173BC4249B633F00640716 /* GeolocationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeolocationHelper.swift; sourceTree = "<group>"; };
 		E44C18561A36203E00734F8B /* WebBLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebBLE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E44C185A1A36203E00734F8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				5AE293ED23F9AAE7006CD0BC /* WBBluetoothRemoteGATTService.js */,
 				5AE293EC23F9AAE7006CD0BC /* WBBluetoothRemoteGATTCharacteristic.js */,
 				5A660AFF1F0FB174004EC11D /* WBUtils.js */,
+				DF17308624E53B6700612AB1 /* GeolocationHelper.js */,
 			);
 			path = Polyfill;
 			sourceTree = "<group>";
@@ -323,7 +326,7 @@
 					E44C18551A36203E00734F8B = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 7RKU9LK986;
-						LastSwiftMigration = 1030;
+						LastSwiftMigration = 1130;
 					};
 					E44C186A1A36203E00734F8B = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -400,6 +403,7 @@
 				5AC7ECAD233D177700CE7A2A /* WBPopUpPickerView.swift in Sources */,
 				5AC47CA81E2CCF2F00BCAE82 /* Animations.swift in Sources */,
 				DF173BC5249B633F00640716 /* GeolocationHelper.swift in Sources */,
+				DF17308724E53B6700612AB1 /* GeolocationHelper.js in Sources */,
 				5AC8067D21655B5E00AA5176 /* DividerView.swift in Sources */,
 				5A7579EA2151588B003F0CEA /* ConsoleViewController.swift in Sources */,
 				5A5D6404216C9F9300BCD722 /* WBLog.swift in Sources */,
@@ -570,6 +574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7RKU9LK986;
 				ENABLE_TESTABILITY = YES;
@@ -579,6 +584,7 @@
 				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.uk.greenparksoftware.webble;
 				PRODUCT_NAME = WebBLE;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -588,6 +594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7RKU9LK986;
 				INFOPLIST_FILE = BasicBrowser/Info.plist;
