@@ -49,6 +49,7 @@
 		BB4DBE651C97F577000D2C35 /* WBTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4DBE641C97F577000D2C35 /* WBTransaction.swift */; };
 		BB4DE1F41C8D0A44003151BF /* WBDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4DE1F31C8D0A44003151BF /* WBDevice.swift */; };
 		DF17308724E53B6700612AB1 /* GeolocationHelper.js in Sources */ = {isa = PBXBuildFile; fileRef = DF17308624E53B6700612AB1 /* GeolocationHelper.js */; };
+		DF17308824E5500800612AB1 /* GeolocationHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = DF17308624E53B6700612AB1 /* GeolocationHelper.js */; };
 		DF173BC5249B633F00640716 /* GeolocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF173BC4249B633F00640716 /* GeolocationHelper.swift */; };
 		E44C185C1A36203E00734F8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44C185B1A36203E00734F8B /* AppDelegate.swift */; };
 		E44C185E1A36203E00734F8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44C185D1A36203E00734F8B /* ViewController.swift */; };
@@ -325,7 +326,7 @@
 				TargetAttributes = {
 					E44C18551A36203E00734F8B = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 7RKU9LK986;
+						DevelopmentTeam = S239RY2S2U;
 						LastSwiftMigration = 1130;
 					};
 					E44C186A1A36203E00734F8B = {
@@ -360,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF17308824E5500800612AB1 /* GeolocationHelper.js in Resources */,
 				5AFC780222ECDCC50071E792 /* WBRemoteGATTServer.js in Resources */,
 				5A31618721CC55ED00C4446B /* Copy@480.png in Resources */,
 				5AC47CA61E2BE57000BCAE82 /* Tick@480.png in Resources */,
@@ -576,7 +578,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7RKU9LK986;
+				DEVELOPMENT_TEAM = S239RY2S2U;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = BasicBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -596,7 +598,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7RKU9LK986;
+				DEVELOPMENT_TEAM = S239RY2S2U;
 				INFOPLIST_FILE = BasicBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
